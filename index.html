@@ -459,13 +459,6 @@
     .project-card:hover * { color: var(--cream) !important; }
     .project-card:hover .tag { border-color: rgba(255,255,255,0.3); }
 
-    .project-card.featured {
-      grid-column: span 2;
-      background: var(--light);
-      align-self: stretch;
-    }
-    .project-card.featured:hover { background: var(--rust); }
-
     .project-num {
       font-family: 'DM Mono', monospace;
       font-size: .62rem;
@@ -474,7 +467,6 @@
       margin-bottom: 1.2rem;
     }
     .project-card h3 { font-size: 1.15rem; margin-bottom: 1rem; line-height: 1.35; }
-    .project-card.featured h3 { font-size: 1.5rem; }
     .project-card p {
       font-size: .87rem;
       color: var(--muted);
@@ -846,7 +838,7 @@
         <p class="home-tagline">MS Business Analytics candidate at Western New England University — turning raw data into decisions through Python, SQL, Power BI, and machine learning.</p>
         <div class="home-actions">
           <button class="btn" onclick="showPage('who')">Explore My Story →</button>
-          <a href="mailto:malavikapolanki9@gmail.com" class="btn-outline">Get in Touch</a>
+          <a href="/cdn-cgi/l/email-protection#365b575a57405f5d5746595a57585d5f0f76515b575f5a1855595b" class="btn-outline">Get in Touch</a>
           <a href="Malavika_Polanki_Resume.pdf" download class="btn-outline">⬇ Resume</a>
         </div>
       </div>
@@ -885,7 +877,7 @@
         <div class="contact-strip">
           <div>📍 Springfield, Massachusetts</div>
           <div>📞 <a href="tel:4133619490">413-361-9490</a></div>
-          <div>✉ <a href="mailto:malavikapolanki9@gmail.com">malavikapolanki9@gmail.com</a></div>
+          <div>✉ <a href="/cdn-cgi/l/email-protection#8fe2eee3eef9e6e4eeffe0e3eee1e4e6b6cfe8e2eee6e3a1ece0e2"><span class="__cf_email__" data-cfemail="0f626e636e7966646e7f60636e616466364f68626e6663216c6062">[email&#160;protected]</span></a></div>
         </div>
       </div>
 
@@ -917,7 +909,7 @@
         <p>I believe the best analysts aren't just people who can run models — they're people who can <strong>tell the story behind the numbers</strong> and make that story useful to the people who need it most.</p>
         <p>I'm open to full-time, co-op, and hybrid roles in <strong>Business Analytics, Data Analytics, BI Reporting, Predictive Analytics,</strong> and <strong>Financial Analytics</strong>.</p>
         <br>
-        <a href="mailto:malavikapolanki9@gmail.com" class="btn">Let's Connect →</a>
+        <a href="/cdn-cgi/l/email-protection#264b474a47504f4d4756494a47484d4f1f66414b474f4a0845494b" class="btn">Let's Connect →</a>
       </div>
 
       <div class="skills-panel">
@@ -1176,7 +1168,7 @@
           <h3>Open to opportunities<br>from July 2026</h3>
           <p>Internship · Full-time · Co-op · Hybrid or Remote · Business Analytics · Data Analytics · BI · Predictive Analytics · Financial Analytics</p>
         </div>
-        <a href="mailto:malavikapolanki9@gmail.com" class="btn-light">Get in Touch →</a>
+        <a href="/cdn-cgi/l/email-protection#6c010d000d1a05070d1c03000d020705552c0b010d0500420f0301" class="btn-light">Get in Touch →</a>
       </div>
     </div>
   </div>
@@ -1190,12 +1182,12 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
         LinkedIn
       </a>
-      <a href="mailto:malavikapolanki9@gmail.com" class="footer-link">✉ Email</a>
+      <a href="/cdn-cgi/l/email-protection#2449454845524d4f45544b48454a4f4d1d644349454d480a474b49" class="footer-link">✉ Email</a>
       <a href="Malavika_Polanki_Resume.pdf" download class="footer-link">⬇ Resume</a>
     </div>
   </footer>
 
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     // ── PAGE SWITCHER ──
     // Shows the selected page, hides all others, updates nav active state
     function showPage(id) {
@@ -1203,15 +1195,4 @@
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       // Show selected page
       document.getElementById('page-' + id).classList.add('active');
-      // Update nav button active state
-      document.querySelectorAll('.nav-links button').forEach(btn => btn.classList.remove('active'));
-      const pageOrder = ['home','who','been','built','creds'];
-      const idx = pageOrder.indexOf(id);
-      if (idx !== -1) document.querySelectorAll('.nav-links button')[idx].classList.add('active');
-      // Scroll to top on page switch
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  </script>
-
-</body>
-</html>
+      // Update nav
