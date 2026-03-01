@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Malavika Polanki — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================
+       VARIABLES & RESET
+    ============================================ */
+    :root {
+      --cream: #f5f0e8;
+      --ink:   #1a1410;
+      --rust:  #c0522a;
+      --muted: #7a6f63;
+      --light: #ede8df;
+      --line:  rgba(26,20,16,0.12);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ============================================
+       NAVIGATION
+    ============================================ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.1rem 3rem;
+      background: rgba(245,240,232,0.93);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-logo {
+      font-family: 'DM Mono', monospace;
+      font-size: .72rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color .2s;
+    }
+    .nav-logo:hover { color: var(--rust); }
+
+    .nav-links {
+      display: flex;
+      gap: 0;
+      list-style: none;
+    }
+
+    .nav-links button {
+      font-family: 'DM Sans', sans-serif;
+      font-size: .75rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: none;
+      border: 1px solid transparent;
+      padding: .5rem 1.3rem;
+      cursor: pointer;
+      transition: color .2s, border-color .2s, background .2s;
+    }
+
+    .nav-links button:hover { color: var(--rust); }
+
+    .nav-links button.active {
+      color: var(--ink);
+      border-color: var(--line);
+      background: var(--light);
+    }
+
+    /* ============================================
+       PAGE SYSTEM — only active page shown
+    ============================================ */
+    .page {
+      display: none;
+      flex: 1;
+      padding-top: 80px;
+      animation: pageFadeIn .4s ease both;
+    }
+    .page.active { display: flex; flex-direction: column; }
+
+    @keyframes pageFadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============================================
+       SHARED TYPOGRAPHY
+    ============================================ */
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      line-height: 1.05;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 700;
+    }
+    h3 { font-family: 'Playfair Display', serif; font-weight: 700; }
+
+    .eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: .7rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 1.2rem;
+    }
+
+    /* ============================================
+       SHARED COMPONENTS
+    ============================================ */
+    .skill-tags { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .tag {
+      padding: .4rem .9rem;
+      border: 1px solid var(--ink);
+      font-size: .78rem;
+      letter-spacing: .05em;
+      transition: background .2s, color .2s;
+      cursor: default;
+    }
+    .tag:hover { background: var(--ink); color: var(--cream); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      padding: .85rem 2rem;
+      background: var(--ink);
+      color: var(--cream);
+      font-size: .8rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background .2s, transform .2s;
+      width: fit-content;
+    }
+    .btn:hover { background: var(--rust); transform: translateY(-2px); }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      padding: .85rem 2rem;
+      background: transparent;
+      color: var(--ink);
+      font-size: .8rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid var(--ink);
+      transition: background .2s, color .2s, transform .2s;
+      width: fit-content;
+    }
+    .btn-outline:hover { background: var(--ink); color: var(--cream); transform: translateY(-2px); }
+
+    /* ============================================
+       PAGE HERO (shared across inner pages)
+    ============================================ */
+    .page-hero {
+      padding: 5rem 6rem 4rem;
+      border-bottom: 1px solid var(--line);
+    }
+    .page-hero h1 { font-size: clamp(3rem, 5vw, 5rem); margin-bottom: 1rem; }
+    .page-hero h1 em { color: var(--rust); font-style: italic; }
+    .page-hero p { font-size: 1.05rem; color: var(--muted); max-width: 55ch; line-height: 1.75; }
+
+    /* ============================================
+       PAGE 1: HOME
+    ============================================ */
+    #page-home {
+      min-height: calc(100vh - 80px);
+    }
+
+    .home-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      flex: 1;
+      min-height: calc(100vh - 80px);
+    }
+
+    .home-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 4rem 6rem 6rem;
+      border-right: 1px solid var(--line);
+    }
+
+    .home-left h1 { font-size: clamp(3.2rem, 5.5vw, 6rem); margin-bottom: 1.5rem; }
+    .home-left h1 em { color: var(--rust); font-style: italic; }
+
+    .home-tagline {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 40ch;
+      margin-bottom: 3rem;
+    }
+
+    .home-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .home-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 5rem 4rem;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      margin-bottom: 2.5rem;
+    }
+    .stat { background: var(--cream); padding: 2rem; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--rust);
+    }
+    .stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: .62rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: .4rem;
+    }
+
+    .quick-nav {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      margin-bottom: 2.5rem;
+    }
+    .qnav-card {
+      background: var(--cream);
+      padding: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: .3rem;
+      border: none;
+      text-align: left;
+      transition: background .2s;
+    }
+    .qnav-card:hover { background: var(--rust); }
+    .qnav-card:hover * { color: var(--cream) !important; }
+    .qnav-label {
+      font-family: 'DM Mono', monospace;
+      font-size: .62rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+    .qnav-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .qnav-arrow { font-size: .8rem; color: var(--muted); }
+
+    .contact-strip {
+      font-family: 'DM Mono', monospace;
+      font-size: .72rem;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      padding-top: 1.5rem;
+      line-height: 2.2;
+    }
+    .contact-strip a { color: var(--ink); text-decoration: none; }
+    .contact-strip a:hover { color: var(--rust); }
+
+    /* ============================================
+       PAGE 2: WHO I AM
+    ============================================ */
+    .about-body {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+    }
+
+    .about-text {
+      padding: 5rem 5rem 5rem 6rem;
+      border-right: 1px solid var(--line);
+    }
+    .about-text p {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.9;
+      margin-bottom: 1.4rem;
+    }
+    .about-text p strong { color: var(--ink); font-weight: 500; }
+
+    .skills-panel {
+      padding: 5rem 5rem 5rem 4rem;
+      background: var(--light);
+    }
+    .skills-panel h3 { font-size: 1.4rem; margin-bottom: 2.5rem; }
+
+    .skill-category { margin-bottom: 2.2rem; }
+    .skill-cat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: .62rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: .8rem;
+      display: block;
+    }
+
+    .soft-skills { padding: 4rem 6rem; border-top: 1px solid var(--line); }
+    .soft-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      margin-top: 2rem;
+    }
+    .soft-item {
+      background: var(--cream);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: background .2s;
+    }
+    .soft-item:hover { background: var(--ink); }
+    .soft-item:hover p { color: var(--cream); }
+    .soft-icon { font-size: 1.5rem; margin-bottom: .8rem; }
+    .soft-item p { font-size: .82rem; color: var(--muted); line-height: 1.5; }
+
+    /* ============================================
+       PAGE 3: WHERE I'VE BEEN
+    ============================================ */
+    .timeline-section { padding: 5rem 6rem; }
+
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 1px;
+      background: var(--line);
+    }
+
+    .timeline-item { position: relative; padding: 0 0 4rem 3rem; }
+    .timeline-item:last-child { padding-bottom: 0; }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -5px; top: 8px;
+      width: 11px; height: 11px;
+      border-radius: 50%;
+      background: var(--rust);
+      border: 2px solid var(--cream);
+      box-shadow: 0 0 0 1px var(--rust);
+    }
+
+    .timeline-date {
+      font-family: 'DM Mono', monospace;
+      font-size: .68rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: .6rem;
+    }
+    .timeline-role {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: .4rem;
+      line-height: 1.2;
+    }
+    .timeline-company { font-size: .95rem; color: var(--muted); margin-bottom: 2rem; font-weight: 500; }
+
+    .timeline-bullets { list-style: none; }
+    .timeline-bullets li {
+      font-size: .97rem;
+      color: var(--muted);
+      line-height: 1.8;
+      padding-left: 1.4rem;
+      margin-bottom: .6rem;
+      position: relative;
+    }
+    .timeline-bullets li::before {
+      content: '→';
+      position: absolute; left: 0;
+      color: var(--rust); font-size: .8rem;
+    }
+
+    .current-card {
+      margin-top: 2rem;
+      padding: 2.5rem;
+      background: var(--light);
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--rust);
+    }
+    .current-label {
+      font-family: 'DM Mono', monospace;
+      font-size: .62rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 1rem;
+    }
+    .current-card h3 { font-size: 1.2rem; margin-bottom: .4rem; }
+    .current-card p { font-size: .9rem; color: var(--muted); line-height: 1.7; }
+
+    /* ============================================
+       PAGE 4: WHAT I'VE BUILT
+    ============================================ */
+    .projects-section { padding: 5rem 6rem; }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+
+    .project-card {
+      background: var(--cream);
+      padding: 2.8rem;
+      transition: background .25s;
+      display: flex;
+      flex-direction: column;
+    }
+    .project-card:hover { background: var(--ink); }
+    .project-card:hover * { color: var(--cream) !important; }
+    .project-card:hover .tag { border-color: rgba(255,255,255,0.3); }
+
+    .project-num {
+      font-family: 'DM Mono', monospace;
+      font-size: .62rem;
+      letter-spacing: .2em;
+      color: var(--rust);
+      margin-bottom: 1.2rem;
+    }
+    .project-card h3 { font-size: 1.15rem; margin-bottom: 1rem; line-height: 1.35; }
+    .project-card p {
+      font-size: .87rem;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+      flex: 1;
+    }
+
+    /* ============================================
+       PAGE 5: MY CREDENTIALS
+    ============================================ */
+    .credentials-section { padding: 5rem 6rem; }
+
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 5rem;
+    }
+
+    .edu-card {
+      padding: 3rem;
+      border: 1px solid var(--line);
+      position: relative;
+      overflow: hidden;
+      transition: border-color .2s;
+    }
+    .edu-card:hover { border-color: var(--rust); }
+    .edu-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 4px; height: 100%;
+      background: var(--rust);
+    }
+
+    .edu-badge {
+      font-family: 'DM Mono', monospace;
+      font-size: .62rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 1rem;
+    }
+    .edu-degree {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: .5rem;
+      line-height: 1.3;
+    }
+    .edu-school { font-size: 1rem; color: var(--muted); margin-bottom: .3rem; font-weight: 500; }
+    .edu-location { font-size: .85rem; color: var(--muted); margin-bottom: 1rem; }
+    .edu-date {
+      font-family: 'DM Mono', monospace;
+      font-size: .68rem;
+      letter-spacing: .1em;
+      color: var(--rust);
+      margin-bottom: 1.5rem;
+    }
+    .edu-courses-label {
+      font-family: 'DM Mono', monospace;
+      font-size: .6rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: .6rem;
+    }
+    .edu-courses { font-size: .88rem; color: var(--muted); line-height: 1.8; }
+
+    .cert-section { border-top: 1px solid var(--line); padding-top: 4rem; }
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      margin-top: 2rem;
+    }
+    .cert-card { background: var(--cream); padding: 2.5rem; transition: background .2s; }
+    .cert-card:hover { background: var(--light); }
+    .cert-status {
+      font-family: 'DM Mono', monospace;
+      font-size: .6rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      margin-bottom: .8rem;
+    }
+    .cert-status.in-progress { color: var(--rust); }
+    .cert-status.planned { color: var(--muted); }
+    .cert-card h3 { font-size: 1.05rem; margin-bottom: .5rem; line-height: 1.4; }
+    .cert-card p { font-size: .85rem; color: var(--muted); line-height: 1.6; }
+
+    .availability-cta {
+      margin-top: 4rem;
+      padding: 4rem;
+      background: var(--ink);
+      color: var(--cream);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+    }
+    .availability-cta h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--cream);
+    }
+    .availability-cta p { color: rgba(245,240,232,0.65); margin-top: .5rem; font-size: .95rem; }
+    .btn-light {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      padding: .85rem 2rem;
+      background: var(--cream);
+      color: var(--ink);
+      font-size: .8rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background .2s, color .2s, transform .2s;
+    }
+    .btn-light:hover { background: var(--rust); color: var(--cream); transform: translateY(-2px); }
+
+    /* ============================================
+       FOOTER
+    ============================================ */
+    footer {
+      padding: 2.5rem 4rem;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+    }
+    footer p { font-family: 'DM Mono', monospace; font-size: .7rem; color: var(--muted); }
+    .footer-avail {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      font-family: 'DM Mono', monospace;
+      font-size: .7rem;
+      color: var(--muted);
+    }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #4caf50;
+      animation: pulse 2s infinite;
+    }
+
+    /* ============================================
+       ANIMATIONS
+    ============================================ */
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+    @keyframes pageFadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============================================
+       RESPONSIVE
+    ============================================ */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links button { padding: .5rem .6rem; font-size: .65rem; letter-spacing: .05em; }
+      .home-grid { grid-template-columns: 1fr; min-height: auto; }
+      .home-left { padding: 4rem 2rem; border-right: none; border-bottom: 1px solid var(--line); }
+      .home-right { padding: 3rem 2rem; }
+      .page-hero { padding: 4rem 2rem 3rem; }
+      .about-body { grid-template-columns: 1fr; }
+      .about-text { padding: 3rem 2rem; border-right: none; border-bottom: 1px solid var(--line); }
+      .skills-panel { padding: 3rem 2rem; }
+      .soft-skills { padding: 3rem 2rem; }
+      .soft-grid { grid-template-columns: 1fr 1fr; }
+      .timeline-section { padding: 4rem 2rem; }
+      .projects-section { padding: 4rem 2rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .project-card.featured { grid-column: span 1; }
+      .credentials-section { padding: 4rem 2rem; }
+      .edu-grid { grid-template-columns: 1fr; }
+      .cert-grid { grid-template-columns: 1fr; }
+      .availability-cta { flex-direction: column; text-align: center; padding: 3rem 2rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem; }
+    }
+    @media (max-width: 500px) {
+      .nav-links button { padding: .4rem .4rem; font-size: .6rem; }
+    }
+
+    /* ── RESUME DOWNLOAD BUTTON IN NAV ── */
+    .nav-resume {
+      font-family: 'DM Mono', monospace;
+      font-size: .68rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      background: var(--rust);
+      color: var(--cream);
+      border: none;
+      padding: .45rem 1.1rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      transition: background .2s, transform .2s;
+      margin-left: .8rem;
+    }
+    .nav-resume:hover { background: var(--ink); transform: translateY(-1px); }
+
+    /* ── PHOTO PLACEHOLDER ── */
+    .photo-placeholder {
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      background: var(--light);
+      border: 2px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .photo-placeholder .initials {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--rust);
+      line-height: 1;
+    }
+    .photo-placeholder .photo-hint {
+      font-family: 'DM Mono', monospace;
+      font-size: .55rem;
+      letter-spacing: .1em;
+      color: var(--muted);
+      margin-top: .3rem;
+      text-transform: uppercase;
+    }
+    /* When a real photo is added, it replaces the placeholder */
+    .photo-placeholder img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      position: absolute; top: 0; left: 0;
+    }
+
+    /* ── HOME LEFT: photo + name stacked ── */
+    .home-identity {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .home-identity h1 { margin-bottom: 0; }
+
+    /* ── AROUNDU LOGO IN TIMELINE ── */
+    .timeline-company-row {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      margin-bottom: 2rem;
+    }
+    .company-logo {
+      width: 36px; height: 36px;
+      border-radius: 6px;
+      object-fit: contain;
+      flex-shrink: 0;
+      border: 1px solid var(--line);
+      background: white;
+      padding: 3px;
+    }
+    .timeline-company { margin-bottom: 0; }
+
+    /* ── CO-CURRICULAR SECTION ── */
+    .cocurricular { padding: 4rem 6rem; border-top: 1px solid var(--line); }
+    .cc-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      margin-top: 2rem;
+    }
+    .cc-card {
+      background: var(--cream);
+      padding: 2rem 1.5rem;
+      transition: background .2s;
+    }
+    .cc-card:hover { background: var(--light); }
+    .cc-icon { font-size: 1.6rem; margin-bottom: .8rem; }
+    .cc-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: .4rem;
+      line-height: 1.3;
+    }
+    .cc-desc { font-size: .83rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── WHO I AM: about-text with photo ── */
+    .about-photo-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    /* ── LINKEDIN FOOTER LINK ── */
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .footer-link {
+      font-family: 'DM Mono', monospace;
+      font-size: .7rem;
+      color: var(--muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      transition: color .2s;
+    }
+    .footer-link:hover { color: var(--rust); }
+
+    @media (max-width: 900px) {
+      .cc-grid { grid-template-columns: 1fr 1fr; }
+      .cocurricular { padding: 3rem 2rem; }
+      .home-identity { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .photo-placeholder { width: 120px; height: 120px; }
+      .about-photo-row { flex-direction: column; }
+      .nav-resume { display: none; }
+      .footer-links { flex-direction: column; gap: .5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAVIGATION ── -->
+  <nav>
+    <div class="nav-logo" onclick="showPage('home')">MP / Portfolio</div>
+    <ul class="nav-links">
+      <li><button class="active" onclick="showPage('home')">Home</button></li>
+      <li><button onclick="showPage('who')">Who I Am</button></li>
+      <li><button onclick="showPage('been')">Where I've Been</button></li>
+      <li><button onclick="showPage('built')">What I've Built</button></li>
+      <li><button onclick="showPage('creds')">My Credentials</button></li>
+    </ul>
+    <a href="Malavika_Polanki_Resume.pdf" download class="nav-resume">⬇ Resume</a>
+  </nav>
+
+  <!-- ════════════════════════════════════════
+       PAGE 1: HOME
+  ════════════════════════════════════════ -->
+  <div id="page-home" class="page active">
+    <div class="home-grid">
+
+      <div class="home-left">
+        <p class="eyebrow">Business Analytics · Data Analytics · Business Intelligence</p>
+        <div class="home-identity">
+          <div class="photo-placeholder">
+            <!-- TO ADD YOUR PHOTO: replace this div contents with:
+                 <img src="your-photo.jpg" alt="Malavika Polanki"> -->
+            <span class="initials">MP</span>
+            <span class="photo-hint">Add photo</span>
+          </div>
+          <h1>Malavika<br><em>Polanki</em></h1>
+        </div>
+        <p class="home-tagline">MS Business Analytics candidate at Western New England University — turning raw data into decisions through Python, SQL, Power BI, and machine learning.</p>
+        <div class="home-actions">
+          <button class="btn" onclick="showPage('who')">Explore My Story →</button>
+          <a href="/cdn-cgi/l/email-protection#365b575a57405f5d5746595a57585d5f0f76515b575f5a1855595b" class="btn-outline">Get in Touch</a>
+          <a href="Malavika_Polanki_Resume.pdf" download class="btn-outline">⬇ Resume</a>
+        </div>
+      </div>
+
+      <div class="home-right">
+        <div class="stat-grid">
+          <div class="stat"><div class="stat-num">6+</div><div class="stat-label">Projects Built</div></div>
+          <div class="stat"><div class="stat-num">1yr</div><div class="stat-label">Industry Exp.</div></div>
+          <div class="stat"><div class="stat-num">5+</div><div class="stat-label">Tools & Platforms</div></div>
+          <div class="stat"><div class="stat-num">July<br>'26</div><div class="stat-label">Available From</div></div>
+        </div>
+
+        <div class="quick-nav">
+          <button class="qnav-card" onclick="showPage('who')">
+            <span class="qnav-label">01</span>
+            <span class="qnav-title">Who I Am</span>
+            <span class="qnav-arrow">→</span>
+          </button>
+          <button class="qnav-card" onclick="showPage('been')">
+            <span class="qnav-label">02</span>
+            <span class="qnav-title">Where I've Been</span>
+            <span class="qnav-arrow">→</span>
+          </button>
+          <button class="qnav-card" onclick="showPage('built')">
+            <span class="qnav-label">03</span>
+            <span class="qnav-title">What I've Built</span>
+            <span class="qnav-arrow">→</span>
+          </button>
+          <button class="qnav-card" onclick="showPage('creds')">
+            <span class="qnav-label">04</span>
+            <span class="qnav-title">My Credentials</span>
+            <span class="qnav-arrow">→</span>
+          </button>
+        </div>
+
+        <div class="contact-strip">
+          <div>📍 Springfield, Massachusetts</div>
+          <div>📞 <a href="tel:4133619490">413-361-9490</a></div>
+          <div>✉ <a href="/cdn-cgi/l/email-protection#8fe2eee3eef9e6e4eeffe0e3eee1e4e6b6cfe8e2eee6e3a1ece0e2"><span class="__cf_email__" data-cfemail="0f626e636e7966646e7f60636e616466364f68626e6663216c6062">[email&#160;protected]</span></a></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       PAGE 2: WHO I AM
+  ════════════════════════════════════════ -->
+  <div id="page-who" class="page">
+    <div class="page-hero">
+      <p class="eyebrow">01 — Who I Am</p>
+      <h1>The person behind<br>the <em>data</em></h1>
+      <p>A curious mind that bridges engineering foundations with business intelligence — always asking "what does this data actually mean?"</p>
+    </div>
+
+    <div class="about-body">
+      <div class="about-text">
+        <div class="about-photo-row">
+          <div class="photo-placeholder" style="width:120px;height:120px;flex-shrink:0;">
+            <!-- TO ADD YOUR PHOTO: replace contents with <img src="your-photo.jpg" alt="Malavika Polanki"> -->
+            <span class="initials" style="font-size:2rem;">MP</span>
+          </div>
+          <div>
+            <p style="margin-bottom:0;">I'm a <strong>Business Analytics graduate student</strong> at Western New England University with a background in Electronics and Communication Engineering. That unusual combination means I think in systems — and I know how to get data out of them.</p>
+          </div>
+        </div>
+        <p>At <strong>Accenture Solutions</strong>, I spent a year building and automating data pipelines on enterprise mainframe systems, working alongside business stakeholders to translate real-world requirements into scalable technical solutions.</p>
+        <p>I believe the best analysts aren't just people who can run models — they're people who can <strong>tell the story behind the numbers</strong> and make that story useful to the people who need it most.</p>
+        <p>I'm open to full-time, co-op, and hybrid roles in <strong>Business Analytics, Data Analytics, BI Reporting, Predictive Analytics,</strong> and <strong>Financial Analytics</strong>.</p>
+        <br>
+        <a href="/cdn-cgi/l/email-protection#264b474a47504f4d4756494a47484d4f1f66414b474f4a0845494b" class="btn">Let's Connect →</a>
+      </div>
+
+      <div class="skills-panel">
+        <h3>Technical Skills</h3>
+        <div class="skill-category">
+          <span class="skill-cat-label">Programming</span>
+          <div class="skill-tags">
+            <span class="tag">Python</span><span class="tag">R</span><span class="tag">SQL</span><span class="tag">PostgreSQL</span><span class="tag">COBOL</span><span class="tag">C</span><span class="tag">VHDL</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <span class="skill-cat-label">Visualization & Analytics</span>
+          <div class="skill-tags">
+            <span class="tag">Power BI</span><span class="tag">Tableau</span><span class="tag">SAP Analytics</span><span class="tag">SAP Lumira</span><span class="tag">Crystal Reports</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <span class="skill-cat-label">Databases & Mainframe</span>
+          <div class="skill-tags">
+            <span class="tag">DB2</span><span class="tag">JCL</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <span class="skill-cat-label">Automation & Tools</span>
+          <div class="skill-tags">
+            <span class="tag">UiPath Studio</span><span class="tag">IBM IDz</span><span class="tag">Excel</span><span class="tag">Ubuntu(Linux)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="soft-skills">
+      <p class="eyebrow">Soft Skills</p>
+      <div class="soft-grid">
+        <div class="soft-item"><div class="soft-icon">📊</div><p>Analytical Storytelling</p></div>
+        <div class="soft-item"><div class="soft-icon">🔍</div><p>Problem-Solving & Systems Thinking</p></div>
+        <div class="soft-item"><div class="soft-icon">🤝</div><p>Teamwork & Cross-Functional Communication</p></div>
+        <div class="soft-item"><div class="soft-icon">⚡</div><p>Learning Agility & Reflective Thinking</p></div>
+        <div class="soft-item"><div class="soft-icon">💡</div><p>Business Intelligence & Decision-Making</p></div>
+      </div>
+    </div>
+
+    <!-- Co-Curricular Activities -->
+    <div class="cocurricular">
+      <p class="eyebrow">Co-Curricular Activities</p>
+      <div class="cc-grid">
+        <div class="cc-card">
+          <div class="cc-icon">🤲</div>
+          <div class="cc-title">NSS Volunteer</div>
+          <div class="cc-desc">Actively contributed to National Service Scheme initiatives, helping organize and host college events, cultural programs, and university trips — building community and leadership skills outside the classroom.</div>
+        </div>
+        <div class="cc-card">
+          <div class="cc-icon">🕺</div>
+          <div class="cc-title">Flash Mob Lead — ECE Department</div>
+          <div class="cc-desc">Led and choreographed a flash mob organized by the Electronics & Communication Engineering department — coordinating a large group performance that required planning, rehearsal management, and on-stage confidence.</div>
+        </div>
+        <div class="cc-card">
+          <div class="cc-icon">🎖️</div>
+          <div class="cc-title">NCC Cadet</div>
+          <div class="cc-desc">Served as a National Cadet Corps cadet, undergoing structured training in discipline, leadership, and teamwork — an experience that reinforced commitment, resilience, and a sense of civic responsibility.</div>
+        </div>
+        <div class="cc-card">
+          <div class="cc-icon">🎓</div>
+          <div class="cc-title">Campus Ambassador — AroundU</div>
+          <div class="cc-desc">Representing AroundU on campus as Co-Founder — meeting student clubs, engaging faculty, and driving adoption of a platform built to strengthen the very campus community that shaped these experiences.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       PAGE 3: WHERE I'VE BEEN
+  ════════════════════════════════════════ -->
+  <div id="page-been" class="page">
+    <div class="page-hero">
+      <p class="eyebrow">02 — Where I've Been</p>
+      <h1>My professional<br><em>journey</em> so far</h1>
+      <p>From enterprise mainframes at Accenture to a graduate program in analytics — here's the path that brought me here.</p>
+    </div>
+
+    <div class="timeline-section">
+      <div class="timeline">
+
+        <!-- Accenture -->
+        <div class="timeline-item">
+          <div class="timeline-date">Sep 2023 – Jul 2024</div>
+          <div class="timeline-role">Associate Software Engineer</div>
+          <div class="timeline-company">Accenture Solutions Pvt. Ltd. · India</div>
+          <ul class="timeline-bullets">
+            <li>Developed and automated data-driven batch processing pipelines on enterprise mainframe systems using COBOL and JCL.</li>
+            <li>Supported production analytics workflows by ensuring reliable data processing, job scheduling, and system performance.</li>
+            <li>Improved operational efficiency through workflow automation and system optimization using IBM IDz.</li>
+            <li>Collaborated with business and technical stakeholders to translate client requirements into scalable system solutions.</li>
+            <li>Gained deep exposure to enterprise systems, process automation, and production-grade deployment environments.</li>
+          </ul>
+        </div>
+
+        <!-- AroundU -->
+        <div class="timeline-item">
+          <div class="timeline-date">Sep 2025 – Present</div>
+          <div class="timeline-role">Co-Founder & Campus Growth Lead</div>
+          <div class="timeline-company-row">
+            <img src="aroundu-logo.png" alt="AroundU" class="company-logo">
+            <div class="timeline-company">AroundU · Campus Social Networking Platform · <a href="https://aroundu.me" target="_blank" style="color:var(--rust);text-decoration:none;">aroundu.me</a></div>
+          </div>
+          <ul class="timeline-bullets">
+            <li>Co-founded AroundU, a full-stack social networking platform built exclusively for verified college students and faculty — featuring a real-time campus feed, peer-to-peer marketplace, Lost & Found board, professor booking system, and an in-app earning feature that lets students and professors monetize their free time.</li>
+            <li>Lead campus outreach and adoption strategy — presenting AroundU to student clubs and organizations, articulating the platform's value proposition to diverse campus audiences.</li>
+            <li>Conducting structured feedback sessions with professors and faculty to surface insights that directly shape platform features and user experience.</li>
+            <li>Build and maintain relationships across university communities, acting as the face of the brand in meetings, campus events, and cross-department conversations.</li>
+          </ul>
+        </div>
+
+        <!-- Research Assistant -->
+        <div class="timeline-item">
+          <div class="timeline-date">Sep 2025 – Present</div>
+          <div class="timeline-role">Research Assistant — RISC-V Systems Laboratory</div>
+          <div class="timeline-company">Western New England University · Springfield, MA</div>
+          <ul class="timeline-bullets">
+            <li>Contributing to the development and deployment of a Linux-based RISC-V FPGA research lab environment.</li>
+            <li>Installing and configuring Xilinx ISE 14.7 toolchains on contemporary Ubuntu systems, diagnosing and resolving shared-library conflicts and deep-level dependency issues.</li>
+            <li>Configuring USB cable drivers to enable reliable FPGA board programming and hands-on hardware testing workflows.</li>
+            <li>Partnering with faculty to design a scalable, reproducible lab infrastructure that supports ongoing RISC-V architecture research and experimentation.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       PAGE 4: WHAT I'VE BUILT
+  ════════════════════════════════════════ -->
+  <div id="page-built" class="page">
+    <div class="page-hero">
+      <p class="eyebrow">03 — What I've Built</p>
+      <h1>Projects that<br>tell a <em>story</em></h1>
+      <p>From ML-powered site selection to NLP classifiers — a collection of work that shows how I think and what I build.</p>
+    </div>
+
+    <div class="projects-section">
+      <div class="projects-grid">
+
+        <div class="project-card">
+          <div class="project-num">01 · Ongoing</div>
+          <h3>ML-Powered Walmart Neighborhood Market Expansion</h3>
+          <p>Building a multi-stage machine learning pipeline to identify optimal Walmart Neighborhood Market locations across the US — targeting food desert communities while maximizing business viability. Engineering features from public datasets including USDA Food Access Research Atlas, CDC PLACES, BLS CPI, and OpenStreetMap across 3,000+ US counties. Implementing a three-stage framework combining ML classification (Random Forest, XGBoost, Cluster Analysis), regression-based revenue prediction, and multi-criteria decision making to rank candidate locations by need, economic potential, and market feasibility.</p>
+          <div class="skill-tags">
+            <span class="tag">Python</span><span class="tag">Random Forest</span><span class="tag">XGBoost</span><span class="tag">Cluster Analysis</span><span class="tag">Geospatial Analysis</span>
+          </div>
+        </div>
+        
+        <div class="project-card">
+          <div class="project-num">02</div>
+          <h3>Multi-Label Topic Classifier for Academic Research Papers</h3>
+          <p>Built a full NLP pipeline to assign multiple research topics to academic papers using arXiv metadata. Started with TF-IDF + Logistic Regression, then fine-tuned a SciBERT transformer. Evaluated with Micro/Macro F1 and Hamming Loss, with label-frequency and co-occurrence analyses to handle class imbalance.</p>
+          <div class="skill-tags">
+            <span class="tag">Python</span><span class="tag">NLP</span><span class="tag">SciBERT</span><span class="tag">TF-IDF</span><span class="tag">Logistic Regression</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-num">03</div>
+          <h3>Amazon Stock & Global Events Analysis</h3>
+          <p>Analyzed how major world events influenced Amazon's stock vs. the S&P 500 using SQL and SAP Analytics — distinguishing company-specific vs. market-wide volatility.</p>
+          <div class="skill-tags"><span class="tag">SQL</span><span class="tag">SAP Analytics</span><span class="tag">Data Visualization</span></div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-num">04</div>
+          <h3>Power BI Student Enrollment Dashboard</h3>
+          <p>Interactive dashboard analyzing enrollment trends by year, department, program, and gender using Power Query and DAX — delivered as a self-service reporting tool.</p>
+          <div class="skill-tags"><span class="tag">Power BI</span><span class="tag">DAX</span><span class="tag">Power Query</span></div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-num">05</div>
+          <h3>Supermarket Database Management System</h3>
+          <p>SQL-based relational database tracking product inventory, sales transactions, and customers — with optimized queries, stored procedures, and normalization.</p>
+          <div class="skill-tags"><span class="tag">SQL</span><span class="tag">DB Design</span><span class="tag">Normalization</span></div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-num">06</div>
+          <h3>Golf Club Management System</h3>
+          <p>Python-based system for member registrations, court bookings, and event scheduling with robust error handling and input validation.</p>
+          <div class="skill-tags"><span class="tag">Python</span><span class="tag">Dictionaries</span><span class="tag">Pandas</span></div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-num">07</div>
+          <h3>Wireless Data Transmission via LoRa</h3>
+          <p>Microcontroller-based secure communication system using LoRa technology with real-time encryption/decryption for military and industrial applications.</p>
+          <div class="skill-tags"><span class="tag">Embedded</span><span class="tag">LoRa</span><span class="tag">Encryption</span></div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-num">08</div>
+          <h3>Jumping Jack Game — Arduino Uno</h3>
+          <p>Interactive retro-style game built with Arduino Uno and LCD components, using push-button controls inspired by classic Super Mario Bros mechanics.</p>
+          <div class="skill-tags"><span class="tag">Arduino</span><span class="tag">Embedded C</span><span class="tag">Hardware</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       PAGE 5: MY CREDENTIALS
+  ════════════════════════════════════════ -->
+  <div id="page-creds" class="page">
+    <div class="page-hero">
+      <p class="eyebrow">04 — My Credentials</p>
+      <h1>Education &<br><em>certifications</em></h1>
+      <p>The academic foundation and professional credentials behind the work.</p>
+    </div>
+
+    <div class="credentials-section">
+      <p class="eyebrow" style="margin-bottom:2rem;">Academic Degrees</p>
+      <div class="edu-grid">
+
+        <div class="edu-card">
+          <div class="edu-badge">Current · Graduate</div>
+          <div class="edu-degree">M.S. Business Analytics</div>
+          <div class="edu-school">Western New England University</div>
+          <div class="edu-location">Springfield, Massachusetts</div>
+          <div class="edu-date">Aug 2024 — May 2026 (Expected)</div>
+          <div class="edu-courses-label">Key Coursework</div>
+          <div class="edu-courses">Enterprise Analytics with SAP · Python for Business Analytics · Business Analytics with R</div>
+        </div>
+
+        <div class="edu-card">
+          <div class="edu-badge">Completed · Undergraduate</div>
+          <div class="edu-degree">B.Tech Electronics & Communication Engineering</div>
+          <div class="edu-school">ACE Engineering College</div>
+          <div class="edu-location">Hyderabad, India</div>
+          <div class="edu-date">Aug 2019 — Jul 2023</div>
+          <div class="edu-courses-label">Key Coursework</div>
+          <div class="edu-courses">Microprocessors & Microcontrollers · Data Communication Networks · Digital Signal Processing</div>
+        </div>
+
+      </div>
+
+      <div class="cert-section">
+        <p class="eyebrow">Certifications</p>
+        <div class="cert-grid" style="grid-template-columns: 1fr;">
+          <div class="cert-card">
+            <div class="cert-status in-progress">● In Progress</div>
+            <h3>Microsoft Power BI Data Analyst (PL-300)</h3>
+            <p>Building toward the PL-300 certification — covering data modeling, DAX, Power Query, and report design, grounded in hands-on project experience with Power BI.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="availability-cta">
+        <div>
+          <h3>Open to opportunities<br>from July 2026</h3>
+          <p>Internship · Full-time · Co-op · Hybrid or Remote · Business Analytics · Data Analytics · BI · Predictive Analytics · Financial Analytics</p>
+        </div>
+        <a href="/cdn-cgi/l/email-protection#6c010d000d1a05070d1c03000d020705552c0b010d0500420f0301" class="btn-light">Get in Touch →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <p> 2026 Malavika Polanki</p>
+    <div class="footer-avail"><div class="dot"></div> Available from July 2026</div>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/in/malavika-polanki-4218b523a" target="_blank" class="footer-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+      <a href="/cdn-cgi/l/email-protection#2449454845524d4f45544b48454a4f4d1d644349454d480a474b49" class="footer-link">✉ Email</a>
+      <a href="Malavika_Polanki_Resume.pdf" download class="footer-link">⬇ Resume</a>
+    </div>
+  </footer>
+  <script>
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + id).classList.add('active');
+      document.querySelectorAll('.nav-links button').forEach(btn => btn.classList.remove('active'));
+      const pageOrder = ['home','who','been','built','creds'];
+      const idx = pageOrder.indexOf(id);
+      if (idx !== -1) document.querySelectorAll('.nav-links button')[idx].classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+
+</body>
+</html>
